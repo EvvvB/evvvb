@@ -8,6 +8,10 @@ app.get('/', (req, res) => {
   res.render('mainpage.ejs')
 })
 
+app.get('/temp', (req, res) => {
+  res.render('data.ejs')
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
