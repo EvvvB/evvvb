@@ -1,6 +1,87 @@
 
+body{
+    background-color: #D9DCD6;
+}
 .footer {
     font-size: 10px;
     line-height: 5px;
     text-align: center;
+    height: 40px;
+    color: #D9DCD6;
+    background-color: #16425B;
+}
+.navbar-brand{
+    color: #81C3D7 !important;
+}
+.navbar{
+    background-color: #16425B;
+}
+.navbar-brand{
+
+}
+/* .nav-item{
+    border-left: 1px solid #d0a98f7e;
+    border-right: 1px solid transparent;
+    height: 30%
+} */
+
+.nav-item .nav-link{
+    border-bottom: 2px solid transparent;
+    border-left: 1px solid #2F6690;
+    padding-left: 15px;
+    color: #BCF4F5 !important;
+    transition-duration: .2s;
+   
+}
+.nav-item .nav-link:hover{
+    border-bottom: 2px solid #81C3D7;
+    background-color: #2F6690;
+
+    color: white !important;
+}
+.nav-item:last-child{
+    border-right: 1px solid #2F6690;
+}
+/* .nav-link:last-child:hover{
+    border-right: 1px solid #D0A98F;
+}  */
+
+@media (max-width: 991.98px) {
+    /* CSS that should be displayed if width is equal to or less than 800px goes here */
+  
+    /* .nav-item{
+        border-left: none;
+        border-top: 1px solid #D0A98F;
+        width: 85%
+    } */
+    .nav-item:first-of-type .nav-link{
+        border-top: 1px solid #2F6690;
+        /* border-bottom: 2px solid transparent; */
+        width: 80%
+    }
+    .nav-item .nav-link:hover{
+        border-left: none;
+        border-right: none;
+        /* border-left: 1px solid #81C3D7; */
+        border-bottom: 2px solid #81C3D7;
+        background-color: #2F6690;
+    
+        color: white !important;
+    }
+    .nav-item .nav-link{
+        border-bottom: 2px solid #2F6690;
+        border-left: none;
+        border-bottom: 2px solid #2F6690;
+    }
+    .nav-item:last-child .nav-link:hover{
+        /* border-left: 1px solid #81C3D7; */
+        border-bottom: 2px solid #81C3D7;
+    }
+    .nav-item:last-child{
+        border-right: none;
+        width:80%;
+    }
+    .nav-item:last-child:hover{
+        border-right: none;
+    }
 }
