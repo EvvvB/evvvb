@@ -1,0 +1,30 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EvvvB - Main</title>
+  <%- include('partials/header') %>
+</head>
+<body>
+    <form method ="POST" action="/register">
+        <div class="form-group">
+          <label for="inputTitle">Post Title</label>
+          <input name="username" type="text" class="form-control form-item" id="username" aria-describedby="username" placeholder="username">
+        </div>
+    
+        <div class="form-group">
+          <label for="inputBody">Password</label>
+          <input type="password" name ="password" class="form-control" id="password" placeholder="How was your day?"></textarea>
+        </div>
+    
+        <div class="divCenter">
+          <button type="submit" class="btn btn-primary btn-success">
+            Submit
+          </button>
+        </div>
+      </form>
+  <%- include('partials/footer') %>
+</body>
+
+</html>

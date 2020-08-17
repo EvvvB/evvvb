@@ -16,9 +16,7 @@ body{
 .navbar{
     background-color: #16425B;
 }
-.navbar-brand{
 
-}
 /* .nav-item{
     border-left: 1px solid #d0a98f7e;
     border-right: 1px solid transparent;
@@ -46,6 +44,34 @@ body{
     border-right: 1px solid #D0A98F;
 }  */
 
+/* FORM BUTTON */
+.divCenter{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+}
+.card{
+    margin-top: 10px;
+    background-color:#e2e2e2 ;
+}
+.card-body h5 i{
+    font-size: 12px;
+}
+.btn-outline-primary:hover{
+    background-color: #3a7ca534;
+    color: #16425B;
+}
+.form-item{
+    background-color: #e2e2e2;
+    font-family: 'Open Sans', sans-serif;
+}
+.update-button{
+    margin-top: 15px;
+}
+/* input{
+    font-family: ;
+} */
 @media (max-width: 991.98px) {
     /* CSS that should be displayed if width is equal to or less than 800px goes here */
   
@@ -54,10 +80,13 @@ body{
         border-top: 1px solid #D0A98F;
         width: 85%
     } */
+    .nav-item .nav-link{
+        width: 80%
+       
+    }
     .nav-item:first-of-type .nav-link{
         border-top: 1px solid #2F6690;
         /* border-bottom: 2px solid transparent; */
-        width: 80%
     }
     .nav-item .nav-link:hover{
         border-left: none;
@@ -79,9 +108,10 @@ body{
     }
     .nav-item:last-child{
         border-right: none;
-        width:80%;
+        
     }
     .nav-item:last-child:hover{
         border-right: none;
     }
 }
+

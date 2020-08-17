@@ -1,0 +1,65 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EvvvB - Main</title>
+  <%- include('partials/header') %>
+</head>
+<body>
+<!-- NOTE: ONLY USE = FOR OUTPUT!!! -->
+<% for(i=0; i<data.length; i++) { %>
+ 
+  <% if((i>1) && (i%2 == 0)){ %>
+  </div>
+  <% } %>
+
+  <% if(i%2 == 0){ %>
+    <div class="row">
+  <% } %>
+
+  <!-- FORMAT DATE -->
+  <% 
+  var date = new Date(data[i].createdAt)
+  ampm = "";
+  if(date.getHours() < 12){
+    ampm = "AM";
+  }else{
+    ampm = "PM";
+  }
+  year = date.getFullYear() 
+  month = date.getMonth() 
+  day = date.getDate() 
+  hour = (ampm == "AM") ? date.getHours() : date.getHours()-12;
+  min = (date.getMinutes() > 9)? date.getMinutes() : "0"+date.getMinutes();
+  formatDate = month + "/" + day + "/" + year + " @ " + hour + ":" + min + " " + ampm;                         %>
+  %>
+
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><%=data[i].title%> <i>Posted <%= formatDate %></i></h5>
+        <p class="card-text"><%=data[i].body.substring(0,100)%></p>
+        <a href="/update/<%=data[i].id %>" class="btn btn-outline-primary">Read More</a>
+      </div>
+    </div>
+  </div>
+
+<% }; %>
+</div> 
+<!-- close last row -->
+<div class="divCenter update-button">
+  <a href="/update/new" >
+    <button href="/update/new" type="submit" class="btn align-self-center btn-outline-success">
+      Create New Update
+    </button>
+  </a>
+</div>
+
+
+
+
+  <%- include('partials/footer') %>
+</body>
+
+</html>

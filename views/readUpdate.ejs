@@ -1,0 +1,41 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EvvvB - Main</title>
+  <%- include('partials/header') %>
+</head>
+
+
+
+<body>
+  <div class="card">
+    <!-- <h5 class="card-header">Featured</h5> -->
+    <div class="card-body">
+      <h5 class="card-title"><%= data.title %></h5>
+      <p class="card-text"><%= data.body %></p>
+
+      
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+        <form method="get" action="/update/delete/<%=data.id%>">
+            <label for="inputBody">Deletion Password: </label>
+            <input type="password" name ="password" class="form-control" id="password" placeholder="How was your day?"></textarea>
+            <button type="submit" class="btn btn-primary float-right btn-danger btn-sm">
+                delete
+            </button>
+        </form>
+    </div>
+  </div>
+
+
+
+
+
+  <%- include('partials/footer') %>
+</body>
+
+</html>
