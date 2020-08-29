@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 
 // MONGOOSE MODELS/SCHEMA
-var blogSchema = new Schema({
+var updateSchema = new Schema({
     title:  String, // String is shorthand for {type: String}
     body:   String,
     createdAt:{
@@ -11,6 +11,6 @@ var blogSchema = new Schema({
     }
   });
   
-  var blog = mongoose.model("blogs", blogSchema);
+  var update = mongoose.model("updates", updateSchema);
 
-  module.exports = blog;
+  module.exports = update;

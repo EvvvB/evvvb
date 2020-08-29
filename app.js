@@ -19,7 +19,7 @@ mongoose.connect(database, {useNewUrlParser: true});
 
 
 // MONGOOSE SCHEMAS
-var blog = require("../evvvb/schemas/blogSchema.js");
+var update = require("../evvvb/schemas/blogSchema.js");
 var user = require("../evvvb/schemas/userSchema.js");
 
 // var newUser = new user({
@@ -54,33 +54,33 @@ app.get('/data',(req, res)=>{
 })
 //UPDATE ROUTES
 app.get("/update",(req, res) => {
-  blog.find({}, function(err,data) { 
+  update.find({}, function(err,data) { 
     if(err){
         console.log(err);
         res.send(500).status;
     }
     else {
-        res.render('blog.ejs', {data : data});
+        res.render('update.ejs', {data : data});
         }            
   })
 })
 
 app.get("/update/new",(req, res)=>{
-  res.render('blogNew.ejs')
+  res.render('updateNew.ejs')
 })
 
 
 app.get("/update/delete/:id", (req, res)=>{
-  console.log(req.body.password)
-  if(req.body.password == "lkajfd09!@#asdf-0"){
-    console.log("testing")
-    findByIdAndDelete(req.params.id,(err)=>{
-     if(err){
-      console.log(err)
-     }else{
 
-    }});
-  }
+    console.log("testing")
+    console.log(req.params.id)
+    update.findByIdAndDelete(req.params.id, (err)=>{
+      if(err){ 
+        console.log(err)
+      }else{
+        console.log("Successful deletion");
+      }
+    })
   res.redirect("/update")
 })
 
@@ -89,7 +89,7 @@ app.get("/update/delete/:id", (req, res)=>{
 
 
 app.get("/update/:id", (req,res)=>{
-  blog.findById(req.params.id, (err,data)=> { 
+  update.findById(req.params.id, (err,data)=> { 
     if(err){
         console.log(err);
         res.send(500).status;
@@ -105,7 +105,7 @@ app.get("/update/:id", (req,res)=>{
 
 app.post("/update", async (req, res)=>{
   if(req.body.password == "lkajfd09!@#asdf-0"){
-   var newBlog = new blog({
+   var newBlog = new update({
       title:  req.body.title,
       body:   req.body.body
     });
@@ -162,7 +162,7 @@ app.listen(port, () => {
 
 
 // CREATE AND SAVE
-// var newBlog = new blog({
+// var newBlog = new update({
 //   title:  "a string",
 //   body:   "another one"
 //  });
