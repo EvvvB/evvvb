@@ -19,8 +19,8 @@ mongoose.connect(database, {useNewUrlParser: true});
 
 
 // MONGOOSE SCHEMAS
-var update = require("../evvvb/schemas/blogSchema.js");
-var user = require("../evvvb/schemas/userSchema.js");
+var update = require("../evvvb/schemas/updateSchema.js");
+// var user = require("../evvvb/schemas/userSchema.js");
 
 // var newUser = new user({
 //   username:  "pickle",
@@ -105,12 +105,12 @@ app.get("/update/:id", (req,res)=>{
 
 app.post("/update", async (req, res)=>{
   if(req.body.password == "lkajfd09!@#asdf-0"){
-   var newBlog = new update({
+   var newUpdate = new update({
       title:  req.body.title,
       body:   req.body.body
     });
 
-    await newBlog.save(function (err) {
+    await newUpdate.save(function (err) {
       if (err) return handleError(err);
     });
   }
