@@ -10,12 +10,12 @@ const update = require("./schemas/updateSchema")
 mongoose.set('useUnifiedTopology', true);
 
 //MONGOOSE LOCAL/PROD
-if(process.env.PORT){
-  var database = process.env.DB_CONNECT;
-}else{
-  var database = 'mongodb://localhost:27017/evvvb';
-}
-// var database = 'mongodb+srv://evvv:97Ucqr8r2X00zsLF@cluster0.0u3nw.mongodb.net/evvvb?retryWrites=true&w=majority';
+// if(process.env.PORT){
+//   var database = process.env.DB_CONNECT;
+// }else{
+//   var database = 'mongodb://localhost:27017/evvvb';
+// }
+var database = 'mongodb+srv://evvv:97Ucqr8r2X00zsLF@cluster0.0u3nw.mongodb.net/evvvb?retryWrites=true&w=majority';
 mongoose.connect(database, {useNewUrlParser: true});
 
 
