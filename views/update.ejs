@@ -30,7 +30,7 @@
   year = date.getFullYear() 
   month = date.getMonth() 
   day = date.getDate() 
-  hour = (ampm == "AM") ? date.getHours() : date.getHours()-12;
+  hour = (date.getHours()<13) ? date.getHours() : date.getHours()-12;
   min = (date.getMinutes() > 9)? date.getMinutes() : "0"+date.getMinutes();
   formatDate = month + "/" + day + "/" + year + " @ " + hour + ":" + min + " " + ampm;                         %>
   %>
