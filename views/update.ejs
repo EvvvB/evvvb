@@ -28,7 +28,7 @@
     ampm = "PM";
   }
   year = date.getFullYear() 
-  month = date.getMonth() 
+  month = date.getMonth() + 1
   day = date.getDate() 
   hour = (date.getHours()<13) ? date.getHours() : date.getHours()-12;
   min = (date.getMinutes() > 9)? date.getMinutes() : "0"+date.getMinutes();
