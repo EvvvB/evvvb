@@ -4,7 +4,7 @@ const port = process.env.PORT || 3000;
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-
+const update = require("./schemas/updateSchema")
 
 // mongoose told me to ???
 mongoose.set('useUnifiedTopology', true);
@@ -19,7 +19,7 @@ mongoose.connect(database, {useNewUrlParser: true});
 
 
 // MONGOOSE SCHEMAS
-var update = require("../evvvb/schemas/updateSchema.js");
+// var update = require("../evvvb/schemas/updateSchema.js");
 // var user = require("../evvvb/schemas/userSchema.js");
 
 // var newUser = new user({
