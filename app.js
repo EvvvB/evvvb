@@ -4,35 +4,17 @@ const port = process.env.PORT || 3000;
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const update = require("./schemas/updateSchema")
+const temperature = require("./schemas/tempSchema")
 
+
+//MONGOOSE LOCAL/PROD
 // mongoose told me to ???
 mongoose.set('useUnifiedTopology', true);
 
-//MONGOOSE LOCAL/PROD
-if(process.env.PORT){
-  var database = process.env.DB_CONNECT;
-}else{
-  var database = 'mongodb://localhost:27017/evvvb';
-}
+var database = (process.env.PORT) ? process.env.DB_CONNECT: 'mongodb://localhost:27017/evvvb'
+
 // var database = 'mongodb+srv://evvv:97Ucqr8r2X00zsLF@cluster0.0u3nw.mongodb.net/evvvb?retryWrites=true&w=majority';
 mongoose.connect(database, {useNewUrlParser: true});
-
-
-// MONGOOSE SCHEMAS
-// var update = require("../evvvb/schemas/updateSchema.js");
-// var user = require("../evvvb/schemas/userSchema.js");
-
-// var newUser = new user({
-//   username:  "pickle",
-//   password:   "packle"
-// });
-
-// newUser.save(function (err) {
-//   if (err) return handleError(err);
-// });
-
-
 
 
 //setting public directory from which serving files (CSS)
@@ -46,79 +28,78 @@ app.use(bodyParser.json({ type: 'application/json' }));
 
 app.set('view engine', 'ejs');
 
+require('./routes/updateRoutes')(app)
 
-app.get('/', (req, res) => {
+
+
+app.get('/',(req, res)=>{
   res.render('mainpage.ejs')
 })
+
+
 app.get('/data',(req, res)=>{
   res.render('data.ejs')
 })
-//UPDATE ROUTES
-app.get("/update",(req, res) => {
-  update.find({}, function(err,data) { 
-    if(err){
-        console.log(err);
-        res.send(500).status;
-    }
-    else {
-        res.render('update.ejs', {data : data});
-        }            
+
+app.get('/data/csv', function(req, res) {
+  var data = [
+      ['Day Index', 'Room', '91911', 'testing']
+    , ['8/18/20', '"80"', '"75"', '"83"']
+    , ['8/19/20', '"82"', '"76"', '"83"']
+    , ['8/20/20', '"85"', '"74"', '"83"']
+    , ['8/21/20', '"81"', '"70"', '"83"']
+  ];
+
+  res.statusCode = 200;
+  res.setHeader('Content-disposition', 'attachment; filename=testing.csv');
+  res.setHeader('Content-Type', 'text/csv');
+  
+  data.forEach(function(item) {
+    res.write(item.map(function(field) {
+      return field.toString();
+    }).toString() + '\r\n');
+  });
+  
+  res.end();
+});
+
+// ROUTES FOR SENDING TEMPERATURES TO DB
+app.post('/data/temperature', async (req, res)=>{
+    
+})
+
+app.post("/temperature/data", async(req, res)=>{
+  var newTemp = new temperature({
+    temperature: req.body.temp
   })
-})
-
-app.get("/update/new",(req, res)=>{
-  res.render('updateNew.ejs')
-})
-
-
-app.get("/update/delete/:id", (req, res)=>{
-
-    console.log("testing")
-    console.log(req.params.id)
-    update.findByIdAndDelete(req.params.id, (err)=>{
-      if(err){ 
-        console.log(err)
-      }else{
-        console.log("Successful deletion");
-      }
-    })
-  res.redirect("/update")
-})
-
-
-
-
-
-app.get("/update/:id", (req,res)=>{
-  update.findById(req.params.id, (err,data)=> { 
+  
+  await newTemp.save((err)=>{
     if(err){
-        console.log(err);
-        res.send(500).status;
+      console.log("ERROR")
     }
-    else {
-        res.render('readUpdate.ejs', {data : data});
-        }            
-  })
-})
-
-
-
-
-app.post("/update", async (req, res)=>{
-  if(req.body.password == "lkajfd09!@#asdf-0"){
-   var newUpdate = new update({
-      title:  req.body.title,
-      body:   req.body.body
-    });
-
-    await newUpdate.save(function (err) {
-      if (err) return handleError(err);
-    });
+  else{
+    console.log("save successful!")
   }
-    res.redirect('/update')
- })
-// REGISTER ROUTE
+  }) 
 
+  console.log("made a post request! :)")
+  console.log(req.body.temp)
+  res.redirect('/')
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+// REGISTER ROUTE
 app.get("/register", (req, res)=>{
   res.render("register.ejs")
 })
@@ -171,5 +152,15 @@ app.listen(port, () => {
 //   if (err) return handleError(err);
 // });
 
+// MONGOOSE SCHEMAS
+// var update = require("../evvvb/schemas/updateSchema.js");
 
 
+// var newUser = new user({
+//   username:  "pickle",
+//   password:   "packle"
+// });
+
+// newUser.save(function (err) {
+//   if (err) return handleError(err);
+// });

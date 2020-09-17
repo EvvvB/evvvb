@@ -44,6 +44,11 @@ body{
     border-right: 1px solid #D0A98F;
 }  */
 
+.updateDate{
+    font-size: 12px;
+    margin-left: 30px;
+}
+
 /* FORM BUTTON */
 .divCenter{
     display: block;

@@ -1,38 +1,40 @@
 <!doctype html>
 
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<title>EvvvB - Main</title>
-  <%- include('partials/header') %>
-</head>
+  <head>
+  <meta charset="utf-8">
+  <title>EvvvB - Main</title>
+    <%- include('partials/header') %>
+  </head>
+  <!-- Date formatting -->
+  <% 
+  include ('functions/dateFormat.ejs')
+  let date = new Date(data.createdAt);
+  let formattedDate = formatDate(date);
+  %>
 
 
+  <body>
+    <div class="card">
+      <h5 class="card-header"><%= data.title %><i class ="updateDate"><%=formattedDate%></i></h5>
 
-<body>
-  <div class="card">
-    <!-- <h5 class="card-header">Featured</h5> -->
-    <div class="card-body">
-      <h5 class="card-title"><%= data.title %></h5>
-      <p class="card-text"><%= data.body %></p>
+      <div class="card-body">
+        <p class="card-text"><%= data.body %></p>
 
-      
+      </div>
     </div>
-  </div>
-  <div class="card">
-    <!-- <div class="card-body">
+
+    
+
+    <%- include('partials/footer') %>
+  </body>
+
+</html>
+<!-- <div class="card">
+    <div class="card-body">
             <a href="/update/delete/<%=data.id%>" class="btn btn-primary float-right btn-danger btn-sm">
                 Delete
             </a>
        
-    </div> -->
-  </div>
-
-
-
-
-
-  <%- include('partials/footer') %>
-</body>
-
-</html>
+    </div>
+  </div> -->

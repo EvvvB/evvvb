@@ -7,7 +7,7 @@ Highcharts.chart('container', {
     },
 
     data: {
-        csvURL: 'https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/analytics.csv',
+        csvURL: 'http://localhost:3000/data/csv',
         beforeParse: function (csv) {
             return csv.replace(/\n\n/g, '\n');
         }
@@ -96,12 +96,12 @@ Highcharts.chart('container', {
     },
 
     series: [{
-        name: 'All sessions',
+        name: '91911',
         lineWidth: 4,
         marker: {
             radius: 4
         }
     }, {
-        name: 'New users'
+        name: 'Room'
     }]
 });
