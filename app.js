@@ -8,14 +8,9 @@ const temperature = require("./schemas/tempSchema")
 
 
 //MONGOOSE LOCAL/PROD
-// mongoose told me to ???
 mongoose.set('useUnifiedTopology', true);
-
 var database = (process.env.PORT) ? process.env.DB_CONNECT: 'mongodb://localhost:27017/evvvb'
-
-// var database = 'mongodb+srv://evvv:97Ucqr8r2X00zsLF@cluster0.0u3nw.mongodb.net/evvvb?retryWrites=true&w=majority';
 mongoose.connect(database, {useNewUrlParser: true});
-
 
 //setting public directory from which serving files (CSS)
 app.use(express.static(__dirname + '/public'));
@@ -23,14 +18,10 @@ app.use(express.static(__dirname + '/public'));
 //BODY PARSER
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json({ type: 'application/json' }));
-
-// console.log(user.find({data: "asdfasdf"}))
-
 app.set('view engine', 'ejs');
 
+
 require('./routes/updateRoutes')(app)
-
-
 
 app.get('/',(req, res)=>{
   res.render('mainpage.ejs')
@@ -42,12 +33,13 @@ app.get('/data',(req, res)=>{
 })
 
 app.get('/data/csv', function(req, res) {
+ 
   var data = [
       ['Day Index', 'Room', '91911', 'testing']
-    , ['8/18/20', '"80"', '"75"', '"83"']
-    , ['8/19/20', '"82"', '"76"', '"83"']
-    , ['8/20/20', '"85"', '"74"', '"83"']
-    , ['8/21/20', '"81"', '"70"', '"83"']
+    , ['8/18/2020', '"80"', '"75"', '"83"']
+    // , ['8/19/20', '"82"', '"76"', '"83"']
+    // , ['8/20/20', '"85"', '"74"', '"83"']
+    // , ['8/21/20', '"81"', '"70"', '"83"']
   ];
 
   res.statusCode = 200;
@@ -70,9 +62,11 @@ app.post('/data/temperature', async (req, res)=>{
 
 app.post("/temperature/data", async(req, res)=>{
   var newTemp = new temperature({
-    temperature: req.body.temp
+    temperature: req.body.temp,
+    dateStr: req.body.dateStr
+
   })
-  
+
   await newTemp.save((err)=>{
     if(err){
       console.log("ERROR")

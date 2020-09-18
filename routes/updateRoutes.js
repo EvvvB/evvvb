@@ -1,6 +1,8 @@
 
 const update = require("../schemas/updateSchema");
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
+
+
 module.exports = function(app){
   app.get("/update",(req, res) => {
     update.find({}, function(err,data) { 
@@ -13,6 +15,7 @@ module.exports = function(app){
           }            
     })
   })
+
   app.post("/update", async (req, res)=>{
     console.log("update request")
     console.log(req.body.password)
@@ -44,6 +47,7 @@ module.exports = function(app){
           }            
     })
   })
+  
   
   
   

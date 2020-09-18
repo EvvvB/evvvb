@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 // MONGOOSE MODELS/SCHEMA
 var temperatureSchema = new Schema({
     temperature:  Number, // String is shorthand for {type: String}
+    dateStr: String,
     createdAt:{
       type: Date, default: Date.now
     }
