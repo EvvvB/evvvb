@@ -28,33 +28,104 @@ app.get('/',(req, res)=>{
 })
 
 
-app.get('/data',(req, res)=>{
+app.get('/temps',(req, res)=>{
   res.render('data.ejs')
 })
 
-app.get('/data/csv', function(req, res) {
- 
-  var data = [
-      ['Day Index', 'Room', '91911', 'testing']
-    , ['8/18/2020', '"80"', '"75"', '"83"']
-    // , ['8/19/20', '"82"', '"76"', '"83"']
-    // , ['8/20/20', '"85"', '"74"', '"83"']
-    // , ['8/21/20', '"81"', '"70"', '"83"']
-  ];
+formatDate = function(date){
+  let ampm = (date.getHours()<12) ? "AM" : "PM";
+  let year = date.getFullYear().toString().slice(2,4) ;
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  let hour = date.getHours()
+    if(hour == 0){
+      hour = 12;
+    }else if(hour < 13){
+       hour = date.getHours();
+    }else{
+      hour = date.getHours()-12;
+    }
+  let min = (date.getMinutes() > 9)? date.getMinutes() : "0"+date.getMinutes();
 
-  res.statusCode = 200;
-  res.setHeader('Content-disposition', 'attachment; filename=testing.csv');
-  res.setHeader('Content-Type', 'text/csv');
-  
-  data.forEach(function(item) {
-    res.write(item.map(function(field) {
-      return field.toString();
-    }).toString() + '\r\n');
-  });
-  
-  res.end();
+  let dateString = month + "/" + day + "/" + year +" "+ hour + ampm;  
+
+  return dateString;
+}            
+
+// app.get('/chart', async function(req, res) {
+//   temperature.find((err, temps)=>{
+//     if(err){
+//       console.log(err)
+
+//     }else{
+//       var tempToCsv = [
+//         ['Date', 'Temp'],
+//       ]
+
+//       console.log(formatDate(temps.createdAt))
+
+//       temps.forEach((tempObj)=>{
+//         var tempArr = [tempObj.dateStr,tempObj.temperature]
+//         tempToCsv.push(tempArr)
+//         // console.log(tempArr)
+//       })
+//       console.log(tempToCsv)
+     
+//     res.statusCode = 200;
+//     res.setHeader('Content-disposition', 'attachment; filename=testing.csv');
+//     res.setHeader('Content-Type', 'text/csv');
+    
+//     tempToCsv.forEach(function(item) {
+//       res.write(item.map(function(field) {
+//         return field.toString();
+//       }).toString() + '\r\n');
+//     });
+    
+//     res.end();
+//     }
+//   }).sort({$natural:-1}).limit(10).exec()
+// });
+
+app.get('/data/csv', async function(req, res) {
+  temperature.find((err, temps)=>{
+    if(err){
+      console.log(err)
+
+    }else{
+      var tempToCsv = [
+        ['Time', 'Room'],
+      ]
+
+      temps.forEach((tempObj)=>{
+        var tempArr = [formatDate(tempObj.createdAt),tempObj.temperature]
+        tempToCsv.push(tempArr)
+        // console.log(tempArr)
+        console.log(formatDate(tempObj.createdAt))
+      })
+      console.log(tempToCsv)
+     
+    res.statusCode = 200;
+    res.setHeader('Content-disposition', 'attachment; filename=roomTemps.csv');
+    res.setHeader('Content-Type', 'text/csv');
+    
+    tempToCsv.forEach(function(item) {
+      res.write(item.map(function(field) {
+        return field.toString();
+      }).toString() + '\r\n');
+    });
+    
+    res.end();
+    }
+  }).sort({$natural:-1}).limit(10).exec()
 });
-
+ // var data = [
+      //   ['Day Index', 'Room', '91911', 'testing']
+      // , ['8/18/2020', '"80"', '"75"', '"83"']
+      // , ['8/19/20', '"82"', '"76"', '"83"']
+      // , ['8/20/20', '"85"', '"74"', '"83"']
+      // , ['8/21/20', '"81"', '"70"', '"83"']
+    // ];
+  
 // ROUTES FOR SENDING TEMPERATURES TO DB
 app.post('/data/temperature', async (req, res)=>{
     
