@@ -5,7 +5,12 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const temperature = require("./schemas/tempSchema")
+if(!process.env.PORT){
+  require('dotenv').config()
+}
 
+
+console.log(process.env.TEST_VAR)
 
 //MONGOOSE LOCAL/PROD
 mongoose.set('useUnifiedTopology', true);
@@ -29,7 +34,13 @@ app.get('/',(req, res)=>{
 
 
 app.get('/temps',(req, res)=>{
+  if(!process.env.PORT){
+    csvLink = "https://evvvb.herokuapp.com/data/csv"
+  }else{
+    csvLink = "http://localhost:3000/data/csv"
+  }
   res.render('data.ejs')
+  res.render('data.ejs', {csvLink : cvsLink});
 })
 
 formatDate = function(date){
@@ -52,39 +63,6 @@ formatDate = function(date){
   return dateString;
 }            
 
-// app.get('/chart', async function(req, res) {
-//   temperature.find((err, temps)=>{
-//     if(err){
-//       console.log(err)
-
-//     }else{
-//       var tempToCsv = [
-//         ['Date', 'Temp'],
-//       ]
-
-//       console.log(formatDate(temps.createdAt))
-
-//       temps.forEach((tempObj)=>{
-//         var tempArr = [tempObj.dateStr,tempObj.temperature]
-//         tempToCsv.push(tempArr)
-//         // console.log(tempArr)
-//       })
-//       console.log(tempToCsv)
-     
-//     res.statusCode = 200;
-//     res.setHeader('Content-disposition', 'attachment; filename=testing.csv');
-//     res.setHeader('Content-Type', 'text/csv');
-    
-//     tempToCsv.forEach(function(item) {
-//       res.write(item.map(function(field) {
-//         return field.toString();
-//       }).toString() + '\r\n');
-//     });
-    
-//     res.end();
-//     }
-//   }).sort({$natural:-1}).limit(10).exec()
-// });
 
 app.get('/data/csv', async function(req, res) {
   temperature.find((err, temps)=>{
@@ -118,13 +96,7 @@ app.get('/data/csv', async function(req, res) {
     }
   }).sort({$natural:-1}).limit(48).exec()
 });
- // var data = [
-      //   ['Day Index', 'Room', '91911', 'testing']
-      // , ['8/18/2020', '"80"', '"75"', '"83"']
-      // , ['8/19/20', '"82"', '"76"', '"83"']
-      // , ['8/20/20', '"85"', '"74"', '"83"']
-      // , ['8/21/20', '"81"', '"70"', '"83"']
-    // ];
+
   
 // ROUTES FOR SENDING TEMPERATURES TO DB
 app.post('/data/temperature', async (req, res)=>{
