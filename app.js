@@ -116,7 +116,7 @@ app.get('/data/csv', async function(req, res) {
     
     res.end();
     }
-  }).sort({$natural:-1}).limit(10).exec()
+  }).sort({$natural:-1}).limit(48).exec()
 });
  // var data = [
       //   ['Day Index', 'Room', '91911', 'testing']
