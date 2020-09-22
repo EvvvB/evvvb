@@ -48,10 +48,6 @@ module.exports = function(app){
     })
   })
   
-  
-  
-  
-  
   app.get("/update/delete/:id", (req, res)=>{
   
       console.log("testing")
@@ -65,4 +61,5 @@ module.exports = function(app){
       })
     res.redirect("/update")
   })
+  
 }

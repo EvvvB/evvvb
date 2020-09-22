@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const temperature = require("./schemas/tempSchema")
+
 if(!process.env.PORT){
   require('dotenv').config()
 }
@@ -15,6 +16,7 @@ console.log(process.env.TEST_VAR)
 //MONGOOSE LOCAL/PROD
 mongoose.set('useUnifiedTopology', true);
 var database = (process.env.PORT) ? process.env.DB_CONNECT: 'mongodb://localhost:27017/evvvb'
+database = "mongodb+srv://evvv:97Ucqr8r2X00zsLF@cluster0.0u3nw.mongodb.net/evvvb?retryWrites=true&w=majority"
 mongoose.connect(database, {useNewUrlParser: true});
 
 //setting public directory from which serving files (CSS)
@@ -39,8 +41,7 @@ app.get('/temps',(req, res)=>{
   }else{
     csvLink = "http://localhost:3000/data/csv"
   }
-  res.render('data.ejs')
-  res.render('data.ejs', {csvLink : cvsLink});
+  res.render('data.ejs', {csvLink : csvLink});
 })
 
 formatDate = function(date){
@@ -58,7 +59,7 @@ formatDate = function(date){
     }
   let min = (date.getMinutes() > 9)? date.getMinutes() : "0"+date.getMinutes();
 
-  let dateString = month + "/" + day + "/" + year +" "+ hour + ampm;  
+  let dateString = month + "/" + day +" "+ hour + ampm;  
 
   return dateString;
 }            
@@ -68,17 +69,20 @@ app.get('/data/csv', async function(req, res) {
   temperature.find((err, temps)=>{
     if(err){
       console.log(err)
-
     }else{
       var tempToCsv = [
-        ['Time', 'Room'],
       ]
+      var temporary = []
 
       temps.forEach((tempObj)=>{
         var tempArr = [formatDate(tempObj.createdAt),tempObj.temperature]
         tempToCsv.push(tempArr)
       })
-     
+      tempToCsv.push(['Time', 'Room'])
+      tempToCsv = tempToCsv.reverse()
+      console.log(tempToCsv)
+      
+
     res.statusCode = 200;
     res.setHeader('Content-disposition', 'attachment; filename=roomTemps.csv');
     res.setHeader('Content-Type', 'text/csv');
@@ -91,15 +95,11 @@ app.get('/data/csv', async function(req, res) {
     
     res.end();
     }
-  }).sort({$natural:-1}).limit(48).exec()
+  }).sort({$natural:-1}).limit(48)
 });
 
   
 // ROUTES FOR SENDING TEMPERATURES TO DB
-app.post('/data/temperature', async (req, res)=>{
-    
-})
-
 app.post("/temperature/data", async(req, res)=>{
   var newTemp = new temperature({
     temperature: req.body.temp,

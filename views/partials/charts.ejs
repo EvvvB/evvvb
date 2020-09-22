@@ -1,0 +1,27 @@
+
+
+<canvas style="background-color: white" id="chart"></canvas>
+<script>
+    function makeChart(temps) {
+      var timeLabel = temps.map(function(d) {return d.Time});
+      var roomTemp = temps.map(function(d) {return d.Room});
+  
+      var chart = new Chart('chart', {
+        type: 'line',
+        data: {
+          labels: timeLabel,
+          datasets: [
+            {
+              fill: false,
+              label: 'Room',
+              data: roomTemp,
+              borderColor: 'rgba(44, 130, 201, 1)',
+              borderWidth: 2
+            }
+          ]
+        }
+      });
+    }  
+    d3.csv('<%=process.env.TEMP_CSV%>').then(makeChart);
+</script>
+  
