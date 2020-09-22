@@ -77,10 +77,7 @@ app.get('/data/csv', async function(req, res) {
       temps.forEach((tempObj)=>{
         var tempArr = [formatDate(tempObj.createdAt),tempObj.temperature]
         tempToCsv.push(tempArr)
-        // console.log(tempArr)
-        console.log(formatDate(tempObj.createdAt))
       })
-      console.log(tempToCsv)
      
     res.statusCode = 200;
     res.setHeader('Content-disposition', 'attachment; filename=roomTemps.csv');
