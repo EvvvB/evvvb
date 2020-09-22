@@ -7,7 +7,7 @@ Highcharts.chart('container', {
     },
 
     data: {
-        csvURL: 'http://localhost:3000/data/csv',
+        csvURL: 'https://evvvb.herokuapp.com/data/csv',
         beforeParse: function (csv) {
             return csv.replace(/\n\n/g, '\n');
         }
