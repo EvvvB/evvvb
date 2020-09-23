@@ -17,8 +17,6 @@ module.exports = function(app){
   })
 
   app.post("/update", async (req, res)=>{
-    console.log("update request")
-    console.log(req.body.password)
     if(req.body.password == "lkajfd09!@#asdf-0"){
      var newUpdate = new update({
         title:  req.body.title,

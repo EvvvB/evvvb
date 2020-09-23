@@ -4,19 +4,17 @@ const port = process.env.PORT || 3000;
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const temperature = require("./schemas/tempSchema")
+
 
 if(!process.env.PORT){
   require('dotenv').config()
 }
-
-
-console.log(process.env.TEST_VAR)
+// const functions = require('./functions/formatDate.js')
 
 //MONGOOSE LOCAL/PROD
 mongoose.set('useUnifiedTopology', true);
 var database = (process.env.PORT) ? process.env.DB_CONNECT: 'mongodb://localhost:27017/evvvb'
-database = "mongodb+srv://evvv:97Ucqr8r2X00zsLF@cluster0.0u3nw.mongodb.net/evvvb?retryWrites=true&w=majority"
+// database = "mongodb+srv://evvv:97Ucqr8r2X00zsLF@cluster0.0u3nw.mongodb.net/evvvb?retryWrites=true&w=majority"
 mongoose.connect(database, {useNewUrlParser: true});
 
 //setting public directory from which serving files (CSS)
@@ -27,99 +25,16 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json({ type: 'application/json' }));
 app.set('view engine', 'ejs');
 
-
+// importing routes
 require('./routes/updateRoutes')(app)
+require('./routes/tempRoutes')(app)
 
 app.get('/',(req, res)=>{
   res.render('mainpage.ejs')
 })
 
-
 app.get('/temps',(req, res)=>{
-  if(!process.env.PORT){
-    csvLink = "https://evvvb.herokuapp.com/data/csv"
-  }else{
-    csvLink = "http://localhost:3000/data/csv"
-  }
-  res.render('data.ejs', {csvLink : csvLink});
-})
-
-formatDate = function(date){
-  let ampm = (date.getHours()<12) ? "AM" : "PM";
-  let year = date.getFullYear().toString().slice(2,4) ;
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
-  let hour = date.getHours()
-    if(hour == 0){
-      hour = 12;
-    }else if(hour < 13){
-       hour = date.getHours();
-    }else{
-      hour = date.getHours()-12;
-    }
-  let min = (date.getMinutes() > 9)? date.getMinutes() : "0"+date.getMinutes();
-
-  let dateString = month + "/" + day +" "+ hour + ampm;  
-
-  return dateString;
-}            
-
-
-app.get('/data/csv', async function(req, res) {
-  temperature.find((err, temps)=>{
-    if(err){
-      console.log(err)
-    }else{
-      var tempToCsv = [
-      ]
-      var temporary = []
-
-      temps.forEach((tempObj)=>{
-        var tempArr = [formatDate(tempObj.createdAt),tempObj.temperature]
-        tempToCsv.push(tempArr)
-      })
-      tempToCsv.push(['Time', 'Room'])
-      tempToCsv = tempToCsv.reverse()
-      console.log(tempToCsv)
-      
-
-    res.statusCode = 200;
-    res.setHeader('Content-disposition', 'attachment; filename=roomTemps.csv');
-    res.setHeader('Content-Type', 'text/csv');
-    
-    tempToCsv.forEach(function(item) {
-      res.write(item.map(function(field) {
-        return field.toString();
-      }).toString() + '\r\n');
-    });
-    
-    res.end();
-    }
-  }).sort({$natural:-1}).limit(48)
-});
-
-  
-// ROUTES FOR SENDING TEMPERATURES TO DB
-app.post("/temperature/data", async(req, res)=>{
-  var newTemp = new temperature({
-    temperature: req.body.temp,
-    dateStr: req.body.dateStr
-
-  })
-
-  await newTemp.save((err)=>{
-    if(err){
-      console.log("ERROR")
-    }
-  else{
-    console.log("save successful!")
-  }
-  }) 
-
-  console.log("made a post request! :)")
-  console.log(req.body.temp)
-  res.redirect('/')
-
+  res.render('temps.ejs');
 })
 
 
@@ -131,9 +46,7 @@ app.post("/temperature/data", async(req, res)=>{
 
 
 
-
-
-// REGISTER ROUTE
+// REGISTER ROUTES
 app.get("/register", (req, res)=>{
   res.render("register.ejs")
 })
@@ -159,14 +72,6 @@ app.post("/register", async (req, res)=>{
 app.get("/register", (req, res)=>{
   res.render("register.ejs")
 })
-
-
-
-
-
-
-
-
 
 
 app.listen(port, () => {

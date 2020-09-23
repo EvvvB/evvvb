@@ -31,7 +31,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title"><%=data[i].title%> <i>Posted: <%= formattedDate %></i></h5>
-        <p class="card-text"><%=data[i].body.substring(0,100)%></p>
+        <p class="card-text"><%=data[i].body.substring(0,165)%> ...</p>
         <a href="/update/<%=data[i].id %>" class="btn btn-outline-primary">Read More</a>
       </div>
     </div>
