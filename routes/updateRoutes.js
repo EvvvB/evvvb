@@ -2,7 +2,6 @@
 const update = require("../schemas/updateSchema");
 // var mongoose = require('mongoose');
 
-
 module.exports = function(app){
   app.get("/update",(req, res) => {
     update.find({}, function(err,data) { 
@@ -17,7 +16,7 @@ module.exports = function(app){
   })
 
   app.post("/update", async (req, res)=>{
-    if(req.body.password == "lkajfd09!@#asdf-0"){
+    if(req.body.password == process.env.UPDATE_PASS){
      var newUpdate = new update({
         title:  req.body.title,
         body:   req.body.body

@@ -13,8 +13,8 @@ if(!process.env.PORT){
 
 //MONGOOSE LOCAL/PROD
 mongoose.set('useUnifiedTopology', true);
+//var database = "mongodb+srv://evvv:97Ucqr8r2X00zsLF@cluster0.0u3nw.mongodb.net/evvvb?retryWrites=true&w=majority"
 var database = (process.env.PORT) ? process.env.DB_CONNECT: 'mongodb://localhost:27017/evvvb'
-// database = "mongodb+srv://evvv:97Ucqr8r2X00zsLF@cluster0.0u3nw.mongodb.net/evvvb?retryWrites=true&w=majority"
 mongoose.connect(database, {useNewUrlParser: true});
 
 //setting public directory from which serving files (CSS)
