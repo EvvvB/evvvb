@@ -15,7 +15,12 @@ module.exports = function(app){
     }else{
 
       temps.forEach((tempObj)=>{//add api temp
-        var tempArr = [formatDate(tempObj.createdAt),tempObj.temperature]
+        if(tempObj.apiTemperature){
+          var tempArr = [formatDate(tempObj.createdAt),tempObj.temperature, tempObj.apiTemperature]            
+        }else{
+          var tempArr = [formatDate(tempObj.createdAt),tempObj.temperature]
+        }
+        
         tempToCsv.push(tempArr)
       })
       
@@ -48,6 +53,7 @@ module.exports = function(app){
   
     console.log(req.body.pw)
     console.log(req.body.dateStr)
+
     if(req.body.pw == process.env.POST_PASS){
       var newTemp = new temperature({
         temperature: req.body.temp,
