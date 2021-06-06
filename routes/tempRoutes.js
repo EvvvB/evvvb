@@ -15,7 +15,7 @@ module.exports = function(app){
     }else{
 
       temps.forEach((tempObj)=>{//add api temp
-        if(tempObj.apiTemperature){
+        if(tempObj.apiTemperature){//checking for api temp
           var tempArr = [formatDate(tempObj.createdAt),tempObj.temperature, tempObj.apiTemperature]            
         }else{
           var tempArr = [formatDate(tempObj.createdAt),tempObj.temperature]
@@ -24,7 +24,7 @@ module.exports = function(app){
         tempToCsv.push(tempArr)
       })
       
-      tempToCsv.push(['Time', 'Room', 'API'])
+      tempToCsv.push(['Time', 'Room', 'API (91911)'])
       tempToCsv = tempToCsv.reverse()
       }
     }).sort({$natural:-1}).limit(60)
