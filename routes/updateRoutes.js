@@ -45,7 +45,7 @@ module.exports = function(app){
     })
   })
   
-  app.get("/update/delete/:id", (req, res)=>{
+  app.delete("/update/delete/:id", (req, res)=>{
   
       console.log("testing")
       console.log(req.params.id)
